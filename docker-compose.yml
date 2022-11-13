@@ -3,8 +3,9 @@ services:
   db:
     image: mysql:8.0
     volumes:
-      - ./db:/docker-entrypoint-initdb.d
-      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+      - ./db/.data:/var/lib/mysql
     ports:
       - 3306:3306
     env_file: 
@@ -12,7 +13,7 @@ services:
   app:
     build: ./
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:ro
     ports:
       - 80:80
     env_file: 
