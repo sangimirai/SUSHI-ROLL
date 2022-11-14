@@ -13,10 +13,13 @@
 
 1. このリポジトリをクローン
 2. 以下のコマンドを実行する
+
 ```sh
 docker compose up
 ```
+
 3. 以下のサービスが起動する
+
 ```sh
 # httpd
 http://localhost
@@ -24,6 +27,13 @@ http://localhost
 # phpmyadmin
 http://localhost:8080
 ```
+
+```sh
+DBのid, password
+# user = sushi, roll
+# root = root, root
+```
+
 
 ### 静的解析
 
