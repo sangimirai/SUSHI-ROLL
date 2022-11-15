@@ -16,6 +16,9 @@
 
 ```sh
 docker compose up
+
+# コンテナ環境の初期化
+# docker compose down -v
 ```
 
 3. 以下のサービスが起動する
