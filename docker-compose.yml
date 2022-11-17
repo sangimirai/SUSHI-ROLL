@@ -22,7 +22,7 @@ services:
     image: phpmyadmin:5.2
     ports:
       - 8080:80
-    environment:
-      - PMA_HOST=db
+    env_file: 
+      - ./.env.sample
 volumes:
   sushi_roll_data:
