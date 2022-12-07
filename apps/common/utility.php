@@ -26,3 +26,33 @@ function FuncDataBaseConnection(): PDO{
         exit();
     }
 }
+
+/**
+ * Select文を実行する関数
+ * 実行結果が連想配列で返ってきます
+ *
+ * @param string $sql
+ * @param array<string, mixed> $param
+ * 
+ * @return array<string, mixed>
+ */
+function FuncSelectSql(string $sql, array $param): array{
+    $stmt = FuncDataBaseConnection()->prepare($sql);
+    $stmt->execute($param);
+    return $stmt->fetchAll();
+}
+
+/**
+ * Insert, Update, Delete文を実行する関数
+ * 変更のあった行数が返ってきます。
+ *
+ * @param string $sql
+ * @param array<string, mixed> $param
+ *
+ * @return int
+ */
+function FuncExecuteSql(string $sql, array $param): int{
+    $stmt = FuncDataBaseConnection()->prepare($sql);
+    $stmt->execute($param);
+    return $stmt->rowCount();
+}
