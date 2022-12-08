@@ -37,8 +37,7 @@ function FuncDataBaseConnection(): PDO{
  * @return array<string, mixed>
  */
 function FuncSelectSql(string $sql, array $param): array{
-    $stmt = FuncDataBaseConnection()->prepare($sql);
-    $stmt->execute($param);
+    $stmt = FuncExecuteAnySql($sql, $param);
     return $stmt->fetchAll();
 }
 
@@ -52,7 +51,20 @@ function FuncSelectSql(string $sql, array $param): array{
  * @return int
  */
 function FuncExecuteSql(string $sql, array $param): int{
+    $stmt = FuncExecuteAnySql($sql, $param);
+    return $stmt->rowCount();
+}
+
+/**
+ * 任意のSQLを実行する関数
+ *
+ * @param string $sql
+ * @param array<string, mixed> $param
+ *
+ * @return PDOStatement
+ */
+function FuncExecuteAnySql(string $sql, array $param): PDOStatement{
     $stmt = FuncDataBaseConnection()->prepare($sql);
     $stmt->execute($param);
-    return $stmt->rowCount();
+    return $stmt;
 }
