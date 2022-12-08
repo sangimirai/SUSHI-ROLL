@@ -1,8 +1,6 @@
 <?php
 declare(strict_types=1);
 
-require_once(dirname(__FILE__)."/../../config/config.php");
-
 /**
  * htmlspecialcharsのラッパー関数
  */
@@ -14,12 +12,17 @@ function h(string $str): string {
  * データベースへの接続関数
  */
 function FuncDataBaseConnection(): PDO{
-    $config = new Config();
-    $dsn = "mysql:dbname={$config->GetDbName()};host={$config->GetDbHost()};charset=utf8";
-    $user = $config->GetDbUser();
-    $password = $config->GetDbPass();
+    $host = getenv("DB_HOST");
+    $dbName = getenv("MYSQL_DATABASE");
+    $user = getenv("MYSQL_USER");
+    $password = getenv("MYSQL_PASSWORD");
+    $options = [
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION
+    ];
+    $dsn = "mysql:dbname={$dbName};host={$host};charset=utf8";
     try {
-        $dataBase = new PDO($dsn,$user,$password);
+        $dataBase = new PDO($dsn,$user,$password, $options);
         return $dataBase;
     }catch(Exception $e){
         echo "Database Error: ". $e->getMessage();
