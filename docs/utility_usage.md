@@ -14,7 +14,9 @@
 
 #### FuncSelectSql関数
 
-selectの結果を返してくれます。
+selectの結果を返してくれます
+
+##### 使用例
 
 ```php
 <?php
@@ -22,13 +24,26 @@ selectの結果を返してくれます。
 $変数 = FuncSelectSql("select * from テーブル名;");
 
 # プリペアードステースメントが使用できます。
-$変数 = FunctionSql("select * from テーブル名 where 列名 = :値", [":値" => 入れたい値]);
+$変数 = FuncSelectSql("select * from テーブル名 where 列名 = :値;", [":値" => 入れたい値]);
+```
+
+##### 具体例
+
+```php
+<?php
+# すべての本の名前を取得する
+$books = FuncSelectSql("select book_name from books");
+
+# idが123の本の全ての情報を取得する
+$book = FuncSelectSql("select * from books where id = :id;", [":id" => 123]);
+$book = FuncSelectSql("select * from books where id = ?;", [123]);
 ```
 
 #### FuncExecuteSql関数
 
-insert, update, deleteの更新行数を返してくれます。
+insert, update, deleteなどの更新された行数を返してくれます。
 
+##### 使用例
 
 ```php
 <?php
@@ -39,6 +54,34 @@ $変更のあった行数 = FuncExecuteSql("inset into テーブル名 values(:�
                                   [":値1" => 入れたい値1, ":値2" => 入れたい値2]);
 ```
 
+##### 具体例
+
+```php
+<?php
+# 例
+$count = FuncSelectSql("insert into books(book_id) value(:id);", [":id" => 123]);
+# または
+$count = FuncSelectSql("insert into books(book_id) value(?);", [123]);
+```
+
+#### FuncExecuteAnySql関数
+
+すべてのSQLを実行できます｡
+`execute()`した結果が返ってくるので、`fetch()`や`rowCount()`などを適用が可能です｡
+
+##### 使用例
+
+```php
+<?php
+$変数 = FuncExecuteAnySql("select 列名 from テーブル名;").fetch();
+```
+
+実行結果が不要な場合はこのような書き方も可能です｡
+
+```php
+<?php
+FuncExecuteAnySql("insert into books(book_id) value(123);");
+```
 
 ### プルダウンを作成したい時
 
