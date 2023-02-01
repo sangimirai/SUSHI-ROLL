@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+error_reporting(0);
+
 $showCodeType = [1, 4]; //修正を表示する区分
 
 //プルダウン作成
