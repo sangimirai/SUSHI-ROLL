@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+/*--- menu.php ---*/
+
+h1.center{
+  text-align: center;
+}
+
+a.btn-style-link{
+    display: inline-block;
+    padding: 16px 24px;
+    text-decoration: none;
+    border: 1px;
+    background: #56d;
+    color: #eee;
+    box-shadow: 0px 2px 4px #65e;
+    transition: box-shadow .3s;
+    margin-right: 5px;
+  }
+
+h3.miniTitle{
+    background: #ffaa00;
+    }

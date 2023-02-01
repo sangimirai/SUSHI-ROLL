@@ -8,21 +8,32 @@ services:
       - sushi_roll_data:/var/lib/mysql
     ports:
       - 3306:3306
-    env_file: 
-      - ./.env.sample
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+
   app:
     build: ./
     volumes:
       - ./:/var/www/html:ro
     ports:
       - 80:80
-    env_file: 
-      - ./.env.sample
+    environment:
+      DB_HOST: ${DB_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
   phpmyadmin:
     image: phpmyadmin:5.2
     ports:
       - 8080:80
-    env_file: 
-      - ./.env.sample
+    environment:
+      PMA_HOST: ${PMA_HOST}
+      PMA_USER: ${PMA_USER}
+      PMA_PASSWORD: ${PMA_PASSWORD}
+
 volumes:
   sushi_roll_data:
