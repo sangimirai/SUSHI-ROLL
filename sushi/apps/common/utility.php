@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 error_reporting(0);
@@ -17,12 +18,17 @@ function FuncMakePulldown($codeType)
 
 function FuncDataBaseConnection()
 {
-    $dsn = "mysql:dbname=library_test;host=10.123.100.101;charset=utf8";
-    $user = "root";
-    $password = "";
+    $host = getenv("DB_HOST");
+    $dbName = getenv("MYSQL_DATABASE");
+    $user = getenv("MYSQL_USER");
+    $password = getenv("MYSQL_PASSWORD");
+    $options = [
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+        PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION
+    ];
+    $dsn = "mysql:dbname={$dbName};host={$host};charset=utf8";
     try {
-        $dataBase = new PDO($dsn, $user, $password);
-        $dataBase->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $dataBase = new PDO($dsn, $user, $password, $options);
         return $dataBase;
     } catch (Exception $e) {
         echo "Database Error: " . $e->getMessage();
@@ -95,12 +101,12 @@ function is_login(int $user_type): bool
     if (!isset($_SESSION["user"]["user_type"]) || !isset($_SESSION["user"]["use_type"])) {
         return false;
     }
-    
+
     // 利用出来ない場合
     if ($_SESSION["user"]["use_type"] != 0) {
         return false;
     }
-    
+
     if ($_SESSION["user"]["user_type"] != $user_type) {
         return false;
     }
